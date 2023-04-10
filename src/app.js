@@ -1,4 +1,4 @@
-const express = require('express')
+import express from 'express';
 
 const app = express()
 
@@ -7,18 +7,8 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use((req, res, next) => {
-  res.status(201)
-  next()
-})
-
-app.use((req, res, next) => {
-  res.json({ message: 'Réponse du serveur' })
-  next()
-})
-
 app.use((req, res) => {
   console.log('Réponse envoyée avec succès')
 })
 
-module.exports = app
+export default app
