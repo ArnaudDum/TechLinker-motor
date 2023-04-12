@@ -2,6 +2,9 @@ import express from 'express'
 import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
 
+import User from './models/User.js'
+console.log(User)
+
 const app = express()
 dotenv.config()
 mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_SECRET}@${process.env.MONGODB_CLUSTER}/?retryWrites=true&w=majority`, 
