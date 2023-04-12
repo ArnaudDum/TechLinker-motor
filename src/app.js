@@ -1,9 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
-
-import User from './models/User.js'
-import Project from './models/Project.js'
+import userRouter from './services/routes/user.js'
+import projectRouter from './services/routes/project.js'
 
 const app = express()
 dotenv.config()
@@ -23,13 +22,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use((req, res, next) => {
-  console.log('Requête reçue')
-  next()
-})
-
-app.use((req, res) => {
-  console.log('Réponse envoyée avec succès')
-})
+app.use('/api/user', userRouter);
+app.use('/api/project', projectRouter);
 
 export default app
