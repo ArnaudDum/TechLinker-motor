@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
 
 import User from './models/User.js'
-console.log(User)
+import Project from './models/Project.js'
 
 const app = express()
 dotenv.config()
