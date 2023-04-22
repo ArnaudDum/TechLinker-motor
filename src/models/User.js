@@ -7,7 +7,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   firstName: { type: String },
   lastName: { type: String },
-  pseudo: { type: String, required: true },
+  pseudo: { type: String },
   date: { type: Date, required: true, default: new Date() },
   image: { type: String },
   projects: [Number],
