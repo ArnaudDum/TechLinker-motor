@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../../models/User.js'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 export const signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)

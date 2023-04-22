@@ -1,4 +1,7 @@
 import jwt from 'jsonwebtoken'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 export const auth = (req, res, next) => {
   try {
@@ -8,6 +11,7 @@ export const auth = (req, res, next) => {
     req.auth = {
       userId: userId
     }
+    next()
   } catch (error) {
     res.status(401).json({ error })
   }
