@@ -13,8 +13,18 @@ export const signup = (req, res, next) => {
         password: hash
       })
       user.save()
-        .then(() => res.status(201).json({ message: 'New user signed in' }))
-        .catch((error) => res.status(400).json({ message: 'A user is already registered with this email' }))
+        .then((returned) => {
+          res.status(201).json({
+            message: 'New user signed in',
+            userId: returned._id,
+            token: jwt.sign(
+              { userId: returned._id },
+              process.env.TOKEN_SECRET,
+              { expiresIn: '24h' }
+            )
+          })
+        })
+        .catch(() => res.status(400).json({ message: 'A user is already registered with this email' }))
     })
     .catch((error) => res.status(500).json({ error }))
 }
