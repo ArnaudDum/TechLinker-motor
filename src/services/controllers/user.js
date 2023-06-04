@@ -14,11 +14,12 @@ export const signup = (req, res, next) => {
       })
       user.save()
         .then((returned) => {
+          const { password, ...safeProperties } = returned._doc
           res.status(201).json({
             message: 'New user signed in',
-            userId: returned._id,
+            user: safeProperties,
             token: jwt.sign(
-              { userId: returned._id },
+              { userId: safeProperties._id },
               process.env.TOKEN_SECRET,
               { expiresIn: '24h' }
             )
@@ -40,10 +41,11 @@ export const login = (req, res, next) => {
             if (!valid) {
               res.status(401).json({ message: 'Email and / or password incorrect' })
             } else {
+              const { password, ...safeProperties } = user._doc
               res.status(200).json({
-                userId: user._id,
+                user: safeProperties,
                 token: jwt.sign(
-                  { userId: user._id },
+                  { userId: safeProperties._id },
                   process.env.TOKEN_SECRET,
                   { expiresIn: '24h' }
                 )
