@@ -42,6 +42,7 @@ export const login = (req, res, next) => {
               res.status(401).json({ message: 'Email and / or password incorrect' })
             } else {
               const { password, ...safeProperties } = user._doc
+              console.log(safeProperties._id)
               res.status(200).json({
                 user: safeProperties,
                 token: jwt.sign(
@@ -56,4 +57,13 @@ export const login = (req, res, next) => {
       }
     })
     .catch((error) => res.status(500).json({ error }))
+}
+
+export const getUser = (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+    .then((user) => {
+      const { password, ...safeProperties } = user._doc
+      res.status(200).json(safeProperties)
+    })
+    .catch((error) => res.status(404).json({ message: 'User not found' }))
 }
