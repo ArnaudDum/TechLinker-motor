@@ -10,8 +10,14 @@ const userSchema = new Schema({
   lastName: { type: String },
   pseudo: { type: String },
   date: { type: Date, required: true, default: new Date() },
+  city: { type: String },
+  bio: { type: String },
   image: { type: String },
+  roles: [Number],
   projects: [Number],
+  links: { type: Map },
+  stack: [Number],
+  tools: [Number],
   followers: [Number],
   following: [Number]
 })
