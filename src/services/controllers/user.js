@@ -65,5 +65,26 @@ export const getUser = (req, res, next) => {
       const { password, ...safeProperties } = user._doc
       res.status(200).json(safeProperties)
     })
-    .catch((error) => res.status(404).json({ message: 'User not found' }))
+    .catch((error) => res.status(404).json({ error }))
+}
+
+export const updateUser = (req, res, next) => {
+  const userObject = req.file
+    ? {
+        ...JSON.parse(req.body),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      }
+    : { ...req.body }
+    delete userObject._id;
+    User.findOne({ _id: req.params.id })
+      .then(user => {
+        if (user._id.toString() !== req.auth.userId) {
+          res.status(401).json({ message: 'Not allowed to modify' });
+        } else {
+          User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
+            .then(() => res.status(200).json({ message: 'User updated' }))
+            .catch(error => res.status(404).json({ error }));
+        }
+      })
+      .catch(error => res.status(400).json({ error }));
 }
