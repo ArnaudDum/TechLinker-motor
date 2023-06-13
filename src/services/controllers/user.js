@@ -42,7 +42,6 @@ export const login = (req, res, next) => {
               res.status(401).json({ message: 'Email and / or password incorrect' })
             } else {
               const { password, ...safeProperties } = user._doc
-              console.log(safeProperties._id)
               res.status(200).json({
                 user: safeProperties,
                 token: jwt.sign(
